@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: risk-register
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/riskregister}
+    username: ${DB_USER:risk}
+    password: ${DB_PASSWORD:risk}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none        # schema is owned by Flyway migrations
+  flyway:
+    enabled: true
+  jackson:
+    deserialization:
+      accept-float-as-int: false   # "likelihood": 3.5 must be rejected, not silently truncated
+
+app:
+  cors:
+    allowed-origins: http://localhost:5173,http://localhost:3000

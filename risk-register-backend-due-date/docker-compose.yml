@@ -1,0 +1,10 @@
+# Optional: just a local PostgreSQL for development. Not used for deployment.
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: riskregister
+      POSTGRES_USER: risk
+      POSTGRES_PASSWORD: risk
+    ports:
+      - "5432:5432"
