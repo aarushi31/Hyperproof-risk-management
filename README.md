@@ -2,8 +2,8 @@
 
 A small full-stack Risk Register: create risks, score them (inherent and residual), attach mitigations, and see everything on a severity-colour-coded dashboard.
 
-- **Backend:** Java 17, Spring Boot 3, Spring Data JPA, Flyway, in-memory H2 database (`risk-register-backend/`)
-- **Frontend:** React 18, TypeScript, Vite (`risk-register-frontend/`)
+- **Backend:** Java 17, Spring Boot 3, Spring Data JPA, Flyway, in-memory H2 database (`risk-register-backend-due-date/`)
+- **Frontend:** React 18, TypeScript, Vite (`risk-register-frontend-due-date/`)
 
 ## Run it locally (about 5 minutes)
 
