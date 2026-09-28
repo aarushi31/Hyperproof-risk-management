@@ -11,7 +11,7 @@ A small full-stack Risk Register: create risks, score them (inherent and residua
 
 **1. Start the backend** (terminal 1):
 ```bash
-cd risk-register-backend
+cd risk-register-backend-due-date
 mvn spring-boot:run -Dspring-boot.run.profiles=h2
 ```
 On Windows PowerShell, put the option in quotes:
@@ -22,7 +22,7 @@ The API runs on http://localhost:8080. The `h2` profile is required: it selects 
 
 **2. Start the frontend** (terminal 2):
 ```bash
-cd risk-register-frontend
+cd risk-register-frontend-due-date
 npm install
 npm run dev
 ```
@@ -33,21 +33,21 @@ Open http://localhost:5173. The Vite dev server proxies `/api` to `localhost:808
 ## Run the tests
 
 ```bash
-cd risk-register-backend && mvn test        # scoring, severity bands, business rules, end-to-end API tests
-cd risk-register-frontend && npm test       # severity-band / inherent-score helpers
+cd risk-register-backend-due-date && mvn test        # scoring, severity bands, business rules, end-to-end API tests
+cd risk-register-frontend-due-date && npm test       # severity-band / inherent-score helpers
 ```
 Backend tests need no setup; they use their own in-memory database.
 
 ## Project layout
 
 ```
-risk-register-backend/
+risk-register-backend-due-date/
   scoring/    RiskScoring, Severity        pure logic, no Spring; the most heavily tested part
   domain/     Risk, Mitigation, RiskPolicy JPA entities and lifecycle rules
   service/    RiskService, MitigationService, RiskMapper
   web/        controllers, DTOs, GlobalExceptionHandler
   resources/db/migration/                  Flyway schema (V1 tables, V2 next review date)
-risk-register-frontend/
+risk-register-frontend-due-date/
   src/lib/         api client, types, severity helpers (+ tests)
   src/components/  Dashboard, RiskForm, RiskDetail, SeverityBadge, ReviewDate
 ```
@@ -122,7 +122,7 @@ In a compliance product, "Closed" tells an auditor that the risk was dealt with.
 
 ## Next review date (stretch goal)
 
-`nextReviewDate` (optional, `YYYY-MM-DD`) is stored on the risk. The API returns an `overdue` flag, computed by the backend: true only when the date is **before today** (due today is not overdue) and the risk is **not Closed**. The UI shows a red **OVERDUE** badge and doesn't recompute the flag, so it can't disagree with the API. Past dates are accepted (for example, importing an already-late review), and an update without the field clears it. "Today" uses the server's time zone.
+`nextReviewDate` (`YYYY-MM-DD`) is stored on the risk. The API returns an `overdue` flag, computed by the backend: true only when the date is **before today** (due today is not overdue) and the risk is **not Closed**. The UI shows a red **OVERDUE** badge and doesn't recompute the flag, so it can't disagree with the API. Past dates are accepted (for example, importing an already-late review), and an update without the field clears it. "Today" uses the server's time zone.
 
 ## Assumptions and trade-offs
 
@@ -136,6 +136,6 @@ In a compliance product, "Closed" tells an auditor that the risk was dealt with.
 - **Frontend:** state-based navigation (no router, so no deep links); no UI for editing a mitigation (the API supports it); no component tests; plain CSS and no design system. The live inherent score preview duplicates a trivial backend rule, is unit-tested, and the backend stays authoritative.
 - **Skipped on purpose:** exhaustive edge cases, authentication, deployment and CI, per the brief.
 
-## With more time
+## With more time I would
 
 Audit trail and optimistic locking; pagination and stored residual scores; per-organization scoring parameters; `ACCEPTED` status with justification; framework mapping (NIST CSF or SOC 2 criteria) surfaced in the UI; React Testing Library tests and optimistic updates; router-based deep links; OpenAPI docs.
